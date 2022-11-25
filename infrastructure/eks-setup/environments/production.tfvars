@@ -24,4 +24,20 @@ aws_alb_controller = {
   replica_count   = 2
 }
 
+# this iam role is created in pre-requisites module
 oidc_iam_role = "arn:aws:iam::995105043624:role/milindchawre_oidc_role"
+
+rds = {
+  db_identifier            = "todo-app-db"
+  db_engine                = "postgres"
+  db_version               = "14.1"
+  db_instance_class        = "db.t4g.micro"
+  db_storage               = 10
+  db_name                  = "todo"
+  db_user                  = "postgres"
+  db_port                  = 5432
+  db_backup_retention_days = 1
+  db_family                = "postgres14"
+  db_major_version         = "14"
+  db_deletion_protection   = false
+}

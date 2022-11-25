@@ -56,7 +56,7 @@ module "eks" {
   aws_auth_roles = [
     {
       rolearn  = var.oidc_iam_role
-      username = "role1"
+      username = "oidc_iam_role"
       groups   = ["system:masters"]
     },
   ]

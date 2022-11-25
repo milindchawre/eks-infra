@@ -7,6 +7,7 @@ Before we build the EKS setup using terraform. We need a
 - remote storage to store terraform state files
 - image registry (ECR repo) to store the docker images of applications
 - [IAM OIDC identity provider](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services) to grant github actions access to AWS (needed to deploy EKS and kubernetes applications)
+- IAM OIDC identiy provider will create an IAM role that will be assumed by github actions for deployment, this IAM role will be required in EKS terrafrom code to grant admin level privileges on EKS
 
 The terraform code here will create these required resources and this is onetime activity.
 
