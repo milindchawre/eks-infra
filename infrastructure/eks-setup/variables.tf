@@ -55,6 +55,20 @@ variable "aws_alb_controller" {
   })
 }
 
+# external-dns config
+variable "external_dns" {
+  description = "External DNS configuration"
+  type = object({
+    namespace       = string
+    chart_version   = string
+    timeout_seconds = number
+    domain          = string
+    policy          = string
+    aws_zone_type   = string
+    aws_region      = string
+  })
+}
+
 # PostgreSQL RDS config
 variable "rds" {
   description = "Configuration for PostgreSQL RDS"

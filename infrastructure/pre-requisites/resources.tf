@@ -48,11 +48,44 @@ module "oidc-with-github-actions" {
   source  = "thetestlabs/oidc-with-github-actions/aws"
   version = "0.1.5"
 
-  github_org = var.oidc.github_org_name
-  github_repositories = var.oidc.github_repos
+  github_org           = var.oidc.github_org_name
+  github_repositories  = var.oidc.github_repos
   iam_role_name        = var.oidc.iam_role_name
   iam_role_description = "Enable GitHub OIDC access"
   max_session_duration = var.oidc.max_session_duration
   iam_role_policy      = var.oidc.iam_role_policy
   iam_role_path        = "/"
+}
+
+# Route53 domain
+resource "aws_route53_zone" "my_hosted_zone" {
+  name = var.domain_name
+  comment = "${var.domain_name}"
+
+  tags = {
+    Name = var.domain_name
+  }
+}
+
+#ACM certificate
+module "acm" {
+  source  = "terraform-aws-modules/acm/aws"
+  version = "4.2.0"
+
+  domain_name = var.domain_name
+  zone_id     = aws_route53_zone.my_hosted_zone.zone_id
+
+  subject_alternative_names = [
+    "*.${var.domain_name}",
+    "*.prod.${var.domain_name}",
+    "*.dev.${var.domain_name}",
+    "*.test.${var.domain_name}",
+    "*.staging.${var.domain_name}",
+  ]
+
+  wait_for_validation = true
+
+  tags = {
+    Name = var.domain_name
+  }
 }

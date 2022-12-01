@@ -19,10 +19,16 @@ variable "ecr_repo" {
 variable "oidc" {
   description = "Configure OIDC between GitHub Actions and AWS"
   type = object({
-    github_org_name = string
-    github_repos = list(string)
-    iam_role_name = string
+    github_org_name      = string
+    github_repos         = list(string)
+    iam_role_name        = string
     max_session_duration = number
-    iam_role_policy = string
+    iam_role_policy      = string
   })
+}
+
+variable "domain_name" {
+  description = "Route53 domain name"
+  type        = string
+  default     = ""
 }

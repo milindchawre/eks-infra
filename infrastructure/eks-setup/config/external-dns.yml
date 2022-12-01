@@ -1,0 +1,11 @@
+env:
+  - name: AWS_DEFAULT_REGION
+    value: ${aws_region}
+
+policy: ${policy}
+
+domainFilters: [${domain}]
+
+provider: aws
+
+extraArgs: ["--aws-zone-type=${aws_zone_type}"]
