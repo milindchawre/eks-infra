@@ -59,8 +59,8 @@ module "oidc-with-github-actions" {
 
 # Route53 domain
 resource "aws_route53_zone" "my_hosted_zone" {
-  name = var.domain_name
-  comment = "${var.domain_name}"
+  name    = var.domain_name
+  comment = var.domain_name
 
   tags = {
     Name = var.domain_name

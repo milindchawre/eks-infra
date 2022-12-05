@@ -1,6 +1,7 @@
 name: "Terraform EKS prod deploy"
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
