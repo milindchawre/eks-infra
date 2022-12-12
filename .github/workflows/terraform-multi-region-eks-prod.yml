@@ -8,10 +8,12 @@ on:
     paths:
       - 'infrastructure/eks-setup/**'
       - '!infrastructure/eks-setup/README.md'
+      - '!infrastructure/eks-setup/values.md'
   pull_request:
     paths:
       - 'infrastructure/eks-setup/**'
       - '!infrastructure/eks-setup/README.md'
+      - '!infrastructure/eks-setup/values.md'
 
 jobs:
   terraform-seoul-prod:
