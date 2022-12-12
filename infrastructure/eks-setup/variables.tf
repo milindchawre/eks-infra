@@ -69,8 +69,18 @@ variable "external_dns" {
   })
 }
 
+variable "vpc" {
+  description = "Configuration for VPC"
+  type = object({
+    cidr             = string
+    public_subnets   = list(string)
+    private_subnets  = list(string)
+    database_subnets = list(string)
+  })
+}
+
 # PostgreSQL RDS config
-variable "rds" {
+/*variable "rds" {
   description = "Configuration for PostgreSQL RDS"
   type = object({
     db_identifier            = string
@@ -86,4 +96,4 @@ variable "rds" {
     db_major_version         = string
     db_deletion_protection   = bool
   })
-}
+}*/

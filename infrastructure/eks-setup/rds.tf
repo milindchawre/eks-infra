@@ -1,4 +1,4 @@
-module "security_group" {
+/*module "security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "4.16.2"
 
@@ -77,4 +77,4 @@ module "db" {
   ]
 
   db_parameter_group_tags = merge(var.tags, { Name = var.rds.db_identifier }, { env = var.env_type })
-}
+}*/

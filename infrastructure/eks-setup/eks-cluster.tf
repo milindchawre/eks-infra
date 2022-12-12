@@ -69,7 +69,7 @@ module "load_balancer_controller_irsa_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "5.8.0"
 
-  role_name                              = "load-balancer-controller"
+  role_name                              = "load-balancer-controller-${var.region}"
   attach_load_balancer_controller_policy = true
 
   oidc_providers = {
@@ -86,7 +86,7 @@ module "load_balancer_controller_targetgroup_binding_only_irsa_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "5.8.0"
 
-  role_name                                                       = "load-balancer-controller-targetgroup-binding-only"
+  role_name                                                       = "load-balancer-controller-targetgroup-binding-only-${var.region}"
   attach_load_balancer_controller_targetgroup_binding_only_policy = true
 
   oidc_providers = {
@@ -103,7 +103,7 @@ module "external_dns_irsa_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "5.8.0"
 
-  role_name                     = "external-dns"
+  role_name                     = "external-dns-${var.region}"
   attach_external_dns_policy    = true
   external_dns_hosted_zone_arns = ["arn:aws:route53:::hostedzone/${var.external_dns.domain}"]
 
@@ -129,7 +129,7 @@ data "template_file" "external_dns_policy" {
 }
 
 resource "aws_iam_policy" "external_dns_policy" {
-  name        = "external-dns-policy"
+  name        = "external-dns-policy-${var.region}"
   path        = "/"
   description = "Policy to run external dns on EKS cluster"
 
@@ -148,7 +148,7 @@ data "template_file" "alb_controller_policy" {
 }
 
 resource "aws_iam_policy" "alb_controller_policy" {
-  name        = "alb-controller-policy"
+  name        = "alb-controller-policy-${var.region}"
   path        = "/"
   description = "Policy to run ALB controller on EKS cluster"
 

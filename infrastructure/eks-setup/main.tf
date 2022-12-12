@@ -1,5 +1,5 @@
 locals {
-  cluster_name = "${var.prefix}-eks-${var.env_type}"
+  cluster_name = "${var.prefix}-eks-${var.region}-${var.env_type}"
 }
 
 provider "kubernetes" {

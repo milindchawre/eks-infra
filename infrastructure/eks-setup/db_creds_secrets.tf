@@ -4,7 +4,7 @@ resource "kubernetes_namespace" "app" {
   }
 }
 
-resource "kubernetes_secret" "db_creds" {
+/*resource "kubernetes_secret" "db_creds" {
   metadata {
     name      = "db-creds"
     namespace = kubernetes_namespace.app.metadata[0].name
@@ -16,4 +16,4 @@ resource "kubernetes_secret" "db_creds" {
     db_address             = module.db.db_instance_address
     db_connection_endpoint = module.db.db_instance_endpoint
   }
-}
+}*/
