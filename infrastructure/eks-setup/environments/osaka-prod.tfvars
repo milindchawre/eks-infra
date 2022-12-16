@@ -31,7 +31,7 @@ external_dns = {
   chart_version   = "1.11.0"
   timeout_seconds = 3600
   domain          = "wetravel.ml"
-  policy          = "upsert-only"
+  policy          = "sync"
   aws_zone_type   = "public"
   aws_region      = "ap-northeast-3"
 }

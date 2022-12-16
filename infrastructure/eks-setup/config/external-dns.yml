@@ -8,4 +8,6 @@ domainFilters: [${domain}]
 
 provider: aws
 
+txtOwnerId: ${txt_owner}
+
 extraArgs: ["--aws-zone-type=${aws_zone_type}"]

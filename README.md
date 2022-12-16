@@ -2,7 +2,10 @@
 
 ### Introduction
 
-This code creates a system as mentioned in the [assignment.md](ASSIGNMENT.md). System comprises of an EKS cluster running a [todo application](https://github.com/milindchawre/todo).
+This code creates a system as mentioned in the [assignment.md](ASSIGNMENT.md). System comprises of:
+- a multi-region EKS cluster (two clusters running in primary and secondary aws regions)
+- Aurora PostgreSQL DB cluster which span accross aws regions (making use of [aurora global database feature](https://aws.amazon.com/rds/aurora/global-database/))
+- each EKS cluster running a [todo application](https://github.com/milindchawre/todo)
 
 ### Architecture
 ![EKS-Setup](images/AWS-EKS-Setup.png)

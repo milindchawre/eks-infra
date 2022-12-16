@@ -15,6 +15,7 @@ resource "helm_release" "external_dns" {
     policy        = var.external_dns.policy,
     aws_zone_type = var.external_dns.aws_zone_type,
     aws_region    = var.external_dns.aws_region,
+    txt_owner     = local.cluster_name
     })
     : ""
   ]
