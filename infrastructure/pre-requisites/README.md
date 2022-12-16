@@ -3,7 +3,7 @@
 
 ### Intro
 
-Before we build the EKS setup using terraform. We need a 
+Before we build the EKS multi-region setup using terraform. We need a 
 - remote storage to store terraform state files
 - image registry (ECR repo) to store the docker images of applications
 - [IAM OIDC identity provider](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services) to grant github actions access to AWS (needed to deploy EKS and kubernetes applications)
@@ -61,4 +61,5 @@ Once the pre-requisites resources are created, take a note of below points:
 - DynamoDB table name
 - ECR Repo name
 - OIDC IAM role ARN
-These details will be required when you bring EKS cluster.
+- AWS Regions
+These details will be required when you bring EKS cluster and deploy app on it.

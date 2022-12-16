@@ -89,3 +89,28 @@ module "acm" {
     Name = var.domain_name
   }
 }
+
+module "acm_secondary" {
+  providers = {
+    aws = aws.secondary_region
+  }
+  source  = "terraform-aws-modules/acm/aws"
+  version = "4.2.0"
+
+  domain_name = var.domain_name
+  zone_id     = aws_route53_zone.my_hosted_zone.zone_id
+
+  subject_alternative_names = [
+    "*.${var.domain_name}",
+    "*.prod.${var.domain_name}",
+    "*.dev.${var.domain_name}",
+    "*.test.${var.domain_name}",
+    "*.staging.${var.domain_name}",
+  ]
+
+  wait_for_validation = true
+
+  tags = {
+    Name = var.domain_name
+  }
+}

@@ -5,6 +5,7 @@
 | bucket_name | S3 bucket name where terraform state of EKS cluster will be stored |
 | dynamodb_table | DynamoDB table that will store terraform state lock |
 | ecr_repo | ECR repository to store docker images of applications |
+| aws_region | Name of AWS regions (for primary and secondary cluster in multi-region setup) |
 | oidc | Settings for Github OIDC client to access AWS resources |
 | github_org_name | Github org name |
 | github_repos | Github repositories |

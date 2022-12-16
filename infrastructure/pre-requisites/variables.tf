@@ -32,3 +32,11 @@ variable "domain_name" {
   type        = string
   default     = ""
 }
+
+variable "aws_region" {
+  description = "AWS Regions"
+  type = object({
+    primary_region   = string
+    secondary_region = string
+  })
+}
