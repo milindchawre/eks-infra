@@ -16,11 +16,13 @@ To create EKS cluster use [this github workflow](../../.github/workflows/terrafo
 
 #### Manually
 
-For multi-region deployment, below steps need to be repeated for each AWS region.
+For multi-region deployment, below steps need to be repeated for each AWS region (primary and secondary region for your multi-region setup).
 
 1. Login with your aws account with `aws` cli
    ```shell
    # Set AWS credentials (access key, secret key, region) for both regions
+   # set one of the below aws profile based on the region in which you are setting up the cluster
+   # set the profile on alternate runs (once for each region [primary and secondary aws region])
    # ap-northeast-2 region
    aws configure --profile wetravel-seoul
    export AWS_PROFILE=wetravel-seoul
@@ -39,13 +41,13 @@ For multi-region deployment, below steps need to be repeated for each AWS region
    rm -rf .terraform
    # initialize terraform
    # point to correct backend file either osaka-prod or seoul-prod
-   terraform init -backend-config=backend/prod/backend.hcl
+   terraform init -backend-config=backend/<osaka-prod or seoul-prod>/backend.hcl
    ```
 5. Plan
    ```shell
    # update the command with the preferred tfvars recipe 
    # point to correct tfvars file either osaka-prod or seoul-prod
-   terraform plan -var-file=environments/production.tfvars -out tfplan
+   terraform plan -var-file=environments/<osaka-prod or seoul-prod>.tfvars -out tfplan
    ```
 6. Apply
    ```shell
@@ -54,13 +56,13 @@ For multi-region deployment, below steps need to be repeated for each AWS region
 7. To destroy plan with destroy and apply again (USE only when you want to destroy your environment)
    ```shell
    # update the command with the preferred tfvars recipe
-   terraform plan -var-file=environments/production.tfvars -out tfplan -destroy
+   terraform plan -var-file=environments/<osaka-prod or seoul-prod>.tfvars -out tfplan -destroy
    terraform apply "tfplan"
    ```
 
 #### Post Deployment
 
-Once the AWS resources are created, take a note of below points:
+Once the AWS resources are created, take a note of below points (few of them can be obtained once you run [pre-requisities module](../pre-requisites/)):
 - AWS Region
 - EKS cluster name
 - ACM certificate ARN
@@ -68,6 +70,6 @@ Once the AWS resources are created, take a note of below points:
 - ECR Repo name
 - OIDC IAM role ARN
 - AWS VPC ID
-These details will be required when deploy [todo app](https://github.com/milindchawre/todo) on EKS cluster.
+These details will be required when deploy database using [db-setup module](../db-setup/) and also for the deployment of [todo app](https://github.com/milindchawre/todo) on EKS cluster.
 
-Once you deploy the todo app by following the [README.md](https://github.com/milindchawre/todo/blob/main/README.md), create AWS WAF rule for DDoS protection (rate limit rule) by following [this guide](https://aws.amazon.com/premiumsupport/knowledge-center/waf-mitigate-ddos-attacks/) and attach this WAF to Application load balancer created by your application's ingress resource.
+Now move further with database deployment using [db-setup module](../db-setup/).

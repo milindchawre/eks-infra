@@ -22,7 +22,7 @@ module "eks" {
   subnet_ids = module.vpc.private_subnets
 
   cluster_tags                = merge(var.tags, { Name = local.cluster_name }, { cluster = local.cluster_name }, { env = var.env_type })
-  cluster_security_group_tags = merge(var.tags, { Name = local.cluster_name }, { cluster = local.cluster_name }, { env = var.env_type }, { "kubernetes.io/cluster/${local.cluster_name}" = "shared" })
+  cluster_security_group_tags = merge(var.tags, { Name = local.cluster_name }, { cluster = local.cluster_name }, { env = var.env_type })
   tags                        = merge(var.tags, { Name = local.cluster_name }, { cluster = local.cluster_name }, { env = var.env_type })
 
   eks_managed_node_group_defaults = {
@@ -30,12 +30,7 @@ module "eks" {
     disk_size = 50
 
     attach_cluster_primary_security_group = true
-
-    create_security_group = true
-
-    node_security_group_tags = {
-      "kubernetes.io/cluster/${local.cluster_name}" = "shared"
-    }
+    create_node_security_group            = false
   }
 
   eks_managed_node_groups = {
