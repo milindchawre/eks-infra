@@ -2,7 +2,11 @@
 
 ### Intro
 
-This is a terraform code to setup database in multi-region setup. The code also creates VPC Peering, Aurora PostgresDB with multi-region deployment and configures route53 failover records pointing to Aurora DB.
+This is a terraform code to mainly configure database in multi-region setup. The code creates:
+- VPC Peering (for cross region communication in case of application/db failure)
+- Aurora Postgresql DB with multi-region deployment (using [aurora global database feature](https://aws.amazon.com/rds/aurora/global-database/) that creates DB cluster which spans across AWS regions)
+- creates kubernetes secret resource inside eks cluster which conatins newly created database details alongwith it's credentials which will be later consumed by application to connect to DB
+- configures route53 healthcheck that will be later used for automatic dns failover in case of application failure
 
 ### Steps to deploy
 
@@ -23,7 +27,7 @@ To create multi-region DB setup use [this github workflow](../../.github/workflo
    export AWS_PROFILE=wetravel-seoul
    ```
 2. Make sure [production.tfvars](environments/production.tfvars) contains correct values (refer preparations section above) and also make sure that the `terraform` is installed on your system (version >= v1.3.0).
-3. Make sure [prod backend](backend/prod/backend.hcl) contains correct values, its required to store terraform remote state of our cluster.
+3. Make sure [prod backend](backend/prod/backend.hcl) contains correct values, its required to store terraform remote state of your setup.
 4. Initialize terraform
    ```shell
    # switch to correct directory
@@ -60,6 +64,7 @@ Once the AWS resources are created, take a note of below points:
 - Route53 domain name
 - ECR Repo name
 - OIDC IAM role ARN
+- Route53 Healcheck ID
 These details will be required when deploy [todo app](https://github.com/milindchawre/todo) on EKS cluster.
 
 Once you deploy the todo app by following the [README.md](https://github.com/milindchawre/todo/blob/main/README.md), create AWS WAF rule for DDoS protection (rate limit rule) by following [this guide](https://aws.amazon.com/premiumsupport/knowledge-center/waf-mitigate-ddos-attacks/) and attach this WAF to Application load balancer created by your application's ingress resource.
